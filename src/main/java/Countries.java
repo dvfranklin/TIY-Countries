@@ -18,11 +18,14 @@ public class Countries {
         ArrayList<Country> countries = new ArrayList<>(createArray(input));
         HashMap<String, ArrayList<Country>> countryKey = new HashMap<>(createHash(countries));
 
-        // asks user for a letter, then writes all countries beginning with that letter to JSON
-        fileToWrite(countryKey);
+        try {
+            // asks user for a letter, then writes all countries beginning with that letter to JSON
+            fileToWrite(countryKey);
+        } catch(Exception e){
+            System.out.println(e);
+        }
 
-
-        // this code was just to test that JSON could be parsed
+        // this code was just to test that JSON could be parsed correctly
 
         /*Gson gson = new GsonBuilder().create();
         File test = new File("a_countries.json");
@@ -44,12 +47,13 @@ public class Countries {
      * @param countryKey HashMap mapping characters to an ArrayList of countries beginning with that character
      * @throws IOException Error associated with writing to a file
      */
-    private static void fileToWrite(HashMap<String, ArrayList<Country>> countryKey) throws IOException{
+    private static void fileToWrite(HashMap<String, ArrayList<Country>> countryKey) throws IOException, Exception{
         Scanner scanner = new Scanner(System.in);
         System.out.print("Please enter a single letter: ");
         String letterString = scanner.next().toLowerCase();
         if(letterString.length() > 1){
-            // exception
+            // exception for more than one letter
+            throw new Exception("You entered more than a single letter!");
         }
         char letter = letterString.trim().charAt(0);
 
